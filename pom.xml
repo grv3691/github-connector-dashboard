@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.mycompany</groupId>
+	<artifactId>sample-app</artifactId>
+    <version>1.0.0</version>
+    <packaging>mule-application</packaging>
+
+	<name>sample-app-v1</name>
+
+   <parent>
+		<groupId>com.waters.mule</groupId>
+		<artifactId>waters-parent-pom</artifactId>
+		<version>1.1.0</version>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<app.runtime>4.3.0</app.runtime>
+		<mule.maven.plugin.version>3.3.5</mule.maven.plugin.version>
+		<app.version>v1</app.version>
+		
+		<anypoint.platform.visualizer.layer>PROCESS</anypoint.platform.visualizer.layer> 
+		<anypoint.platform.visualizer.tags>PLATINUM,CARBON,ECOM,ACCOUNT,OWNER-CUSTOMER_PLATFORM</anypoint.platform.visualizer.tags>
+		
+		<number.of.workers>1</number.of.workers>
+		<worker.size>Micro</worker.size>
+		
+		<app.type>internal</app.type> 
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<classifier>mule-application</classifier>
+                </configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mulesoft.munit.tools</groupId>
+				<artifactId>munit-maven-plugin</artifactId>
+				<version>${munit.version}</version>
+				<executions>
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+							<goal>coverage-report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<coverage>
+						<runCoverage>true</runCoverage>
+						<formats>
+							<format>html</format>
+							<format>console</format>
+							<format>json</format>
+						</formats>
+						<ignoreFiles>
+							<ignoreFile>errornhandling.xml</ignoreFile>
+							<ignoreFile>waters-error-handler.xml</ignoreFile>
+						</ignoreFiles>
+						<ignoreFlows>
+							<ignoreFlows>${name}-console</ignoreFlows>
+							<ignoreFlows>${name}-main</ignoreFlows>
+						</ignoreFlows>
+					</coverage>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-objectstore-connector</artifactId>
+			<version>1.1.3</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+    	<dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-validation-module</artifactId>
+            <version>1.4.0</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+    	<dependency>
+            <groupId>com.mulesoft.connectors</groupId>
+            <artifactId>anypoint-mq-connector</artifactId>
+            <version>3.1.2</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+    	<dependency>
+            <groupId>com.mulesoft.connectors</groupId>
+            <artifactId>mule-salesforce-connector</artifactId>
+            <version>10.10.3</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+    </dependencies>
+</project>
